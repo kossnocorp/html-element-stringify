@@ -1,0 +1,42 @@
+{
+  "name": "html-element-stringify",
+  "version": "0.1.0",
+  "description": "HTMLElement stringifier",
+  "main": "index.js",
+  "scripts": {
+    "test": "karma start config/karma.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kossnocorp/html-element-stringify.git"
+  },
+  "keywords": [
+    "utility",
+    "html",
+    "stringifier"
+  ],
+  "author": "Sasha Koss <koss@nocorp.me>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kossnocorp/html-element-stringify/issues"
+  },
+  "homepage": "https://github.com/kossnocorp/html-element-stringify",
+  "dependencies": {},
+  "devDependencies": {
+    "json-loader": "^0.5.3",
+    "karma": "^0.13.9",
+    "karma-cli": "^0.1.0",
+    "karma-mocha": "^0.2.0",
+    "karma-mocha-reporter": "^1.1.1",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "karma-sinon": "^1.0.4",
+    "karma-sourcemap-loader": "^0.3.5",
+    "karma-webpack": "^1.7.0",
+    "mocha": "^2.3.2",
+    "phantomjs": "^1.9.18",
+    "power-assert": "^1.0.1",
+    "sinon": "^1.16.1",
+    "webpack": "^1.12.2",
+    "webpack-espower-loader": "^1.0.1"
+  }
+}
