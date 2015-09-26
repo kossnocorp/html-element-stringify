@@ -40,13 +40,24 @@ describe('htmlElementStringify', function() {
   })
 
   context('when attr has a boolean value', function() {
-    it('stringifies inner HTML', function() {
+    it('simplifies boolean attrs', function() {
+      var textarea = document.createElement('textarea')
+      textarea.id = 'test'
+      textarea.setAttribute('checked', true)
+      textarea.setAttribute('disabled', false)
+      var result = htmlElementStringify(textarea)
+      assert(result == '<textarea id="test" checked disabled></textarea>')
+    })
+  })
+
+  context('when tag can be self-closing', function() {
+    it('simplifies self-closing tags', function() {
       var input = document.createElement('input')
       input.id = 'test'
       input.setAttribute('checked', true)
       input.setAttribute('disabled', false)
       var result = htmlElementStringify(input)
-      assert(result == '<input id="test" checked disabled></input>')
+      assert(result == '<input id="test" checked disabled />')
     })
   })
 
