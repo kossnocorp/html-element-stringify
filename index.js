@@ -14,9 +14,13 @@ module.exports = function htmlElementStringify(el, options) {
 
   var tagName = el.tagName.toLowerCase()
 
-  return '<' + tagName + stringifyAttrs(el.attributes, options) + '>'
-    + truncateString(el.innerHTML, options.truncateInnerHTML)
-    + '</' + tagName + '>'
+  if (isSelfClosingTag(tagName)) {
+    return '<' + tagName + stringifyAttrs(el.attributes, options) + ' />'
+  } else {
+    return '<' + tagName + stringifyAttrs(el.attributes, options) + '>'
+      + truncateString(el.innerHTML, options.truncateInnerHTML)
+      + '</' + tagName + '>'
+  }
 }
 
 /**
@@ -124,5 +128,20 @@ var booleanAttrPattern
  */
 function isBooleanAttr(attrName) {
   return booleanAttrPattern.test(attrName.toLowerCase())
+}
+
+var selfClosingTagPattern
+  = /^(?:area|base|br|col|command|embed|hr|img|input|keygen|link|meta|param|source|track|wbr)$/
+
+/**
+ * @private
+ *
+ * Returns true if passed tag is self-closing
+ * @param {string} tagName - a tag name
+ *
+ * @returns {boolean} is a passed tag self-closing?
+ */
+function isSelfClosingTag(tagName) {
+  return selfClosingTagPattern.test(tagName.toLowerCase())
 }
 
