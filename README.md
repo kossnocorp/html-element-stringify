@@ -18,7 +18,7 @@ div.id = 'test'
 div.innerHTML = 'TEST'
 
 htmlElementStringify(div)
-//=> "<div id='test'>TEST</div>"
+//=> '<div id="test">TEST</div>'
 ```
 
 ## License

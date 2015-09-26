@@ -46,7 +46,7 @@ function stringifyAttrs(attrs, options) {
   function pushStringifiedAttr(attr) {
     stringifiedAttrs.push(
       attr.name + '='
-      + "'" + truncateString(attr.value, options.truncateAttrs) + "'"
+      + '"' + truncateString(escapeAttrValue(attr.value), options.truncateAttrs) + '"'
     )
   }
 
@@ -90,5 +90,17 @@ function truncateString(str, length) {
   } else {
     return str
   }
+}
+
+/**
+ * @private
+ *
+ * Escapes an attr value.
+ * @param {string} str - an attr value
+ *
+ * @returns {string} an escaped attr value
+ */
+function escapeAttrValue(str) {
+  return str.replace(/"/g, '&quot;')
 }
 

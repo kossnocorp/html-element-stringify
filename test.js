@@ -16,8 +16,16 @@ describe('htmlElementStringify', function() {
       div.id = 'test'
       div.dataset.test = true
       var result = htmlElementStringify(div)
-      assert(result == "<div id='test' data-test='true'></div>")
+      assert(result == '<div id="test" data-test="true"></div>')
     })
+  })
+
+  context('for element with property', function() {
+    var div = document.createElement('div')
+    div.id = 'test'
+    div.dataset.test = true
+    var result = htmlElementStringify(div)
+    assert(result == '<div id="test" data-test="true"></div>')
   })
 
   context('for element with inner text', function() {
@@ -26,7 +34,16 @@ describe('htmlElementStringify', function() {
       div.id = 'test'
       div.innerHTML = 'TEST'
       var result = htmlElementStringify(div)
-      assert(result == "<div id='test'>TEST</div>")
+      assert(result == '<div id="test">TEST</div>')
+    })
+  })
+
+  context('when attr value has quotes inside', function() {
+    it('stringifies inner HTML', function() {
+      var div = document.createElement('div')
+      div.id = "'\"quotes\"'"
+      var result = htmlElementStringify(div)
+      assert(result == '<div id="\'&quot;quotes&quot;\'"></div>')
     })
   })
 
@@ -40,7 +57,7 @@ describe('htmlElementStringify', function() {
         var result = htmlElementStringify(div, {
           attrBlacklist: ['id', 'data-test']
         })
-        assert(result == "<div data-lol='wut'></div>")
+        assert(result == '<div data-lol="wut"></div>')
       })
 
       it('suppresses extra space', function() {
@@ -63,7 +80,7 @@ describe('htmlElementStringify', function() {
         var result = htmlElementStringify(div, {
           attrWhitelist: ['data-lol']
         })
-        assert(result == "<div data-lol='wut'></div>")
+        assert(result == '<div data-lol="wut"></div>')
       })
 
       it('suppresses extra space', function() {
@@ -83,7 +100,7 @@ describe('htmlElementStringify', function() {
           attrBlacklist: ['data-lol'],
           attrWhitelist: ['data-lol']
         })
-        assert(result == "<div data-lol='wut'></div>")
+        assert(result == '<div data-lol="wut"></div>')
       })
     })
 
@@ -94,7 +111,7 @@ describe('htmlElementStringify', function() {
           div.id = 'test'
           div.innerHTML = 'html-element-stringify'
           var result = htmlElementStringify(div, {truncateInnerHTML: 5})
-          assert(result == "<div id='test'>html-…</div>")
+          assert(result == '<div id="test">html-…</div>')
         })
       })
 
@@ -104,7 +121,7 @@ describe('htmlElementStringify', function() {
           div.id = 'test'
           div.innerHTML = 'html-element-stringify'
           var result = htmlElementStringify(div, {truncateInnerHTML: 99})
-          assert(result == "<div id='test'>html-element-stringify</div>")
+          assert(result == '<div id="test">html-element-stringify</div>')
         })
       })
     })
@@ -116,7 +133,7 @@ describe('htmlElementStringify', function() {
         div.dataset.test = 'asd'
         div.dataset.lol = 'zxcvbb'
         var result = htmlElementStringify(div, {truncateAttrs: 3})
-        assert(result == "<div id='qwe…' data-test='asd' data-lol='zxc…'></div>")
+        assert(result == '<div id="qwe…" data-test="asd" data-lol="zxc…"></div>')
       })
     })
   })
