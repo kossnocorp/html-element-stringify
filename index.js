@@ -44,10 +44,17 @@ function stringifyAttrs(attrs, options) {
    * @param {Attr} attr - element attr
    */
   function pushStringifiedAttr(attr) {
-    stringifiedAttrs.push(
-      attr.name + '='
-      + '"' + truncateString(escapeAttrValue(attr.value), options.truncateAttrs) + '"'
-    )
+    if (isBooleanAttr(attr.name)) {
+      stringifiedAttrs.push(attr.name)
+    } else {
+      stringifiedAttrs.push(
+        attr.name
+        + '='
+        + '"'
+        + truncateString(escapeAttrValue(attr.value), options.truncateAttrs)
+        + '"'
+      )
+    }
   }
 
   /**
@@ -102,5 +109,20 @@ function truncateString(str, length) {
  */
 function escapeAttrValue(str) {
   return str.replace(/"/g, '&quot;')
+}
+
+var booleanAttrPattern
+  = /^(?:allowfullscreen|async|autofocus|autoplay|checked|compact|controls|declare|default|defaultchecked|defaultmuted|defaultselected|defer|disabled|draggable|enabled|formnovalidate|hidden|indeterminate|inert|ismap|itemscope|loop|multiple|muted|nohref|noresize|noshade|novalidate|nowrap|open|pauseonexit|readonly|required|reversed|scoped|seamless|selected|sortable|spellcheck|translate|truespeed|typemustmatch|visible)$/
+
+/**
+ * @private
+ *
+ * Returns true if passed attribute name is a boolean value.
+ * @param {string} attrName - an attr name
+ *
+ * @returns {boolean} is a passed attr has a boolean value?
+ */
+function isBooleanAttr(attrName) {
+  return booleanAttrPattern.test(attrName.toLowerCase())
 }
 

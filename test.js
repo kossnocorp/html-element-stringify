@@ -20,14 +20,6 @@ describe('htmlElementStringify', function() {
     })
   })
 
-  context('for element with property', function() {
-    var div = document.createElement('div')
-    div.id = 'test'
-    div.dataset.test = true
-    var result = htmlElementStringify(div)
-    assert(result == '<div id="test" data-test="true"></div>')
-  })
-
   context('for element with inner text', function() {
     it('stringifies inner HTML', function() {
       var div = document.createElement('div')
@@ -44,6 +36,17 @@ describe('htmlElementStringify', function() {
       div.id = "'\"quotes\"'"
       var result = htmlElementStringify(div)
       assert(result == '<div id="\'&quot;quotes&quot;\'"></div>')
+    })
+  })
+
+  context('when attr has a boolean value', function() {
+    it('stringifies inner HTML', function() {
+      var input = document.createElement('input')
+      input.id = 'test'
+      input.setAttribute('checked', true)
+      input.setAttribute('disabled', false)
+      var result = htmlElementStringify(input)
+      assert(result == '<input id="test" checked disabled></input>')
     })
   })
 
