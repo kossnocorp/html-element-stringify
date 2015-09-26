@@ -86,6 +86,39 @@ describe('htmlElementStringify', function() {
         assert(result == "<div data-lol='wut'></div>")
       })
     })
+
+    describe('truncateInnerHTML', function() {
+      context('when innerHTML length is bigger than limit', function() {
+        it('truncates innerHTML by specified number of symbols and adds ellipsis', function() {
+          var div = document.createElement('div')
+          div.id = 'test'
+          div.innerHTML = 'html-element-stringify'
+          var result = htmlElementStringify(div, {truncateInnerHTML: 5})
+          assert(result == "<div id='test'>html-…</div>")
+        })
+      })
+
+      context('when innerHTML length is less than limit', function() {
+        it('keeps innerHTML as is', function() {
+          var div = document.createElement('div')
+          div.id = 'test'
+          div.innerHTML = 'html-element-stringify'
+          var result = htmlElementStringify(div, {truncateInnerHTML: 99})
+          assert(result == "<div id='test'>html-element-stringify</div>")
+        })
+      })
+    })
+
+    describe('truncateAttrs', function() {
+      it("truncates attr's values by specified number of symbols and adds ellipsis", function() {
+        var div = document.createElement('div')
+        div.id = 'qwerty'
+        div.dataset.test = 'asd'
+        div.dataset.lol = 'zxcvbb'
+        var result = htmlElementStringify(div, {truncateAttrs: 3})
+        assert(result == "<div id='qwe…' data-test='asd' data-lol='zxc…'></div>")
+      })
+    })
   })
 })
 

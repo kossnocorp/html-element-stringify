@@ -4,7 +4,7 @@ module.exports = function htmlElementStringify(el, options) {
   var tagName = el.tagName.toLowerCase()
 
   return '<' + tagName + stringifyAttrs(el.attributes, options) + '>'
-    + el.innerHTML
+    + truncateString(el.innerHTML, options.truncateInnerHTML)
     + '</' + tagName + '>'
 }
 
@@ -14,7 +14,10 @@ function stringifyAttrs(attrs, options) {
   var attrWhitelist = options.attrWhitelist
 
   function pushStringifiedAttr(attr) {
-    stringifiedAttrs.push(attr.name + '=' + "'" + attr.value + "'")
+    stringifiedAttrs.push(
+      attr.name + '='
+      + "'" + truncateString(attr.value, options.truncateAttrs) + "'"
+    )
   }
 
   function filterAndPushStringifiedAttr(attr) {
@@ -32,5 +35,13 @@ function stringifyAttrs(attrs, options) {
   }
 
   return stringifiedAttrs.length ? ' ' + stringifiedAttrs.join(' ') : ''
+}
+
+function truncateString(str, length) {
+  if (typeof length == 'number' && str.length > length) {
+    return str.substr(0, length) + '…'
+  } else {
+    return str
+  }
 }
 
